@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import GoogleLoginButton from '../components/GoogleLoginButton';
-import { useAuth } from '../context/AuthContext';
+import GoogleLoginButton from '../../components/GoogleLoginButton';
+import { useAuth } from '../../context/AuthContext';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
-import { authService } from '../services/authService';
+import { authService } from '../../services/authService';
 import './LoginPage.css';
 
 const LoginPage = () => {

@@ -1,9 +1,10 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from './context/AuthContext';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import Dashboard from './pages/Dashboard';
+import HomePage from './pages/home/HomePage';
+import LoginPage from './pages/login/LoginPage';
+import RegisterPage from './pages/register/RegisterPage';
+import Dashboard from './pages/dashboard/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
@@ -19,6 +20,7 @@ function App() {
       <AuthProvider>
         <div className="App">
           <Routes>
+            <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route 
@@ -29,8 +31,7 @@ function App() {
                 </ProtectedRoute>
               } 
             />
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
       </AuthProvider>
