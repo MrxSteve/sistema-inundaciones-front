@@ -1,6 +1,6 @@
 import { GoogleLogin } from '@react-oauth/google';
-import { authService } from '../services/authService';
-import { useAuth } from '../context/AuthContext';
+import { authService } from '../../services/authService';
+import { useAuth } from '../../context/AuthContext';
 
 const GoogleLoginButton = ({ onLoginSuccess, onLoginError }) => {
     const { login } = useAuth();

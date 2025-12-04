@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import { authService } from '../../services/authService';
-import Navigation from '../../components/Navigation';
-import GoogleLoginButton from '../../components/GoogleLoginButton';
+import Navigation from '../../components/navbar/Navigation';
+import GoogleLoginButton from '../../components/googleButton/GoogleLoginButton';
 import './LoginPage.css';
 
 const LoginPage = () => {

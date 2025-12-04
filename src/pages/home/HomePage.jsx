@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import Navigation from '../../components/Navigation';
-import Footer from '../../components/Footer';
-import SensorStatusCard from '../../components/SensorStatusCard';
+import Navigation from '../../components/navbar/Navigation';
+import Footer from '../../components/footer/Footer';
+import SensorStatus from '../../components/alertCards/SensorStatus';
 import './HomePage.css';
 
 const HomePage = () => {
@@ -44,7 +44,7 @@ const HomePage = () => {
                         </div>
                     </div>
                     <div className="hero-visual">
-                        <SensorStatusCard />
+                        <SensorStatus />
                     </div>
                 </div>
             </section>
