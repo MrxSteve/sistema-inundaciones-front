@@ -272,12 +272,26 @@ const RegisterPage = () => {
                                 </div>
                             </div>
 
-                            <div className="form-actions">
+                            <div className="form-actions flex flex-col md:flex-row gap-3">
+                                <button
+                                    type="button"
+                                    onClick={() => navigate('/')}
+                                    className="flex-1 bg-transparent border border-white/30 text-white font-medium py-3 px-6 rounded-md hover:bg-white/5 transition-colors flex items-center justify-center gap-2"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                                        <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0L3.586 10l4.707-4.707a1 1 0 011.414 1.414L6.414 10l3.293 3.293a1 1 0 010 1.414z" clipRule="evenodd" />
+                                    </svg>
+                                    <span>Volver</span>
+                                </button>
+
                                 <button
                                     type="submit"
-                                    className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 rounded-md shadow-md flex items-center justify-center gap-2 px-6"
+                                    className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-6 rounded-md shadow-md flex items-center justify-center gap-2"
                                     disabled={loading}
                                 >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden>
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v14m7-7H5" />
+                                    </svg>
                                     {loading && (
                                         <svg
                                             className="animate-spin h-4 w-4 text-white"
