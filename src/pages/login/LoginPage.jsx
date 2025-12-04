@@ -13,6 +13,7 @@ const LoginPage = () => {
         email: '',
         password: ''
     });
+    const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -100,8 +101,8 @@ const LoginPage = () => {
                             <form onSubmit={handleSubmit} className="login-form">
                                 <div className="form-group">
                                     <label htmlFor="email">Correo Electrónico</label>
-                                    <div className="input-container">
-                                        <span className="input-icon">📧</span>
+                                    <div className="input-row">
+                                        <div className="icon-box" aria-hidden>📧</div>
                                         <input
                                             type="email"
                                             id="email"
@@ -117,18 +118,42 @@ const LoginPage = () => {
 
                                 <div className="form-group">
                                     <label htmlFor="password">Contraseña</label>
-                                    <div className="input-container">
-                                        <span className="input-icon">🔒</span>
-                                        <input
-                                            type="password"
-                                            id="password"
-                                            name="password"
-                                            value={formData.password}
-                                            onChange={handleInputChange}
-                                            required
-                                            placeholder="••••••••"
-                                            disabled={loading}
-                                        />
+                                    <div className="input-row">
+                                        <div className="icon-box" aria-hidden>🔒</div>
+                                        <div style={{ position: 'relative', flex: 1 }}>
+                                            <input
+                                                type={showPassword ? 'text' : 'password'}
+                                                id="password"
+                                                name="password"
+                                                value={formData.password}
+                                                onChange={handleInputChange}
+                                                required
+                                                placeholder="••••••••"
+                                                disabled={loading}
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowPassword(!showPassword)}
+                                                aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                                                style={{
+                                                    position: 'absolute',
+                                                    right: 10,
+                                                    top: '50%',
+                                                    transform: 'translateY(-50%)',
+                                                    background: 'transparent',
+                                                    border: 'none',
+                                                    color: 'white',
+                                                    cursor: 'pointer',
+                                                    padding: 4,
+                                                }}
+                                            >
+                                                {showPassword ? (
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3l18 18"/><path d="M10.58 10.59A3 3 0 0013.41 13.41"/><path d="M14.12 14.12A6.5 6.5 0 0112 15.5C5 15.5 1 9 1 9a17.36 17.36 0 014.38-5.63"/></svg>
+                                                ) : (
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                                                )}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
