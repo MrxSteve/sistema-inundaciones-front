@@ -1,113 +1,93 @@
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import DashboardHeader from '../../components/dashboard/DashboardHeader';
+import ProfileCard from '../../components/dashboard/ProfileCard';
+import ProfileEditModal from '../../components/dashboard/ProfileEditModal';
+import QuickActions from '../../components/dashboard/QuickActions';
+import SensorStatus from '../../components/alertCards/SensorStatus';
+import { authService } from '../../services/authService';
+import './Dashboard.css';
 
 const Dashboard = () => {
-    const { user, logout } = useAuth();
+    const { user, logout, login } = useAuth();
+    const [showProfileModal, setShowProfileModal] = useState(false);
+    const [showProfile, setShowProfile] = useState(false);
 
     const handleLogout = () => {
         logout();
     };
 
+    const handleProfileClick = () => {
+        setShowProfile(!showProfile);
+    };
+
+    const handleEditProfile = () => {
+        setShowProfileModal(true);
+    };
+
+    const handleProfileUpdate = (updatedUser) => {
+        // Actualizar el contexto de autenticación con los nuevos datos
+        login(updatedUser);
+    };
+
     return (
-        <div className="dashboard">
-            <header className="dashboard-header">
-                <h1>Dashboard - Sistema de Monitoreo de Inundaciones</h1>
-                <div className="user-info">
-                    {user?.avatarUrl && (
-                        <img
-                            src={user.avatarUrl}
-                            alt="Avatar"
-                            className="user-avatar"
-                            style={{
-                                width: '40px',
-                                height: '40px',
-                                borderRadius: '50%',
-                                marginRight: '10px'
-                            }}
-                        />
-                    )}
-                    <div className="user-details">
-                        <span className="user-name">Hola, {user?.nombre}</span>
-                        <span className="user-email">{user?.email}</span>
+        <div className="modern-dashboard">
+            <DashboardHeader 
+                user={user}
+                onLogout={handleLogout}
+                onProfileClick={handleProfileClick}
+            />
+            
+            <main className="dashboard-main">
+                <div className="dashboard-container">
+                    <div className="dashboard-welcome">
+                        <h1 className="welcome-title">
+                            ¡Bienvenido de vuelta, <span className="user-highlight">{user?.nombre}</span>! 👋
+                        </h1>
+                        <p className="welcome-subtitle">
+                            Monitorea el estado del sistema de alertas de inundación en tiempo real
+                        </p>
                     </div>
-                    <button
-                        onClick={handleLogout}
-                        className="logout-button"
-                        style={{
-                            marginLeft: '20px',
-                            padding: '8px 16px',
-                            backgroundColor: '#dc3545',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer'
-                        }}
-                    >
-                        Cerrar Sesión
-                    </button>
-                </div>
-            </header>
 
-            <main className="dashboard-content" style={{ padding: '20px' }}>
-                <div className="welcome-section">
-                    <h2>¡Bienvenido al Sistema!</h2>
-                    <p>Has iniciado sesión correctamente.</p>
+                    <div className="dashboard-grid">
+                        {/* Sensor Status - Alertas en tiempo real */}
+                        <div className="grid-section full-width">
+                            <div className="section-header">
+                                <h2 className="section-title">Estado del Sistema</h2>
+                                <p className="section-subtitle">Monitoreo en tiempo real de alertas de inundación</p>
+                            </div>
+                            <SensorStatus />
+                        </div>
 
-                    <div className="user-info-card" style={{
-                        backgroundColor: '#f8f9fa',
-                        padding: '20px',
-                        borderRadius: '8px',
-                        marginTop: '20px'
-                    }}>
-                        <h3>Información del Usuario</h3>
-                        <p><strong>ID:</strong> {user?.id}</p>
-                        <p><strong>Nombre:</strong> {user?.nombre}</p>
-                        <p><strong>Email:</strong> {user?.email}</p>
-                        <p><strong>Teléfono:</strong> {user?.telefono || 'No especificado'}</p>
-                        <p><strong>Roles:</strong> {user?.roles?.join(', ')}</p>
-                        <p><strong>Estado:</strong> {user?.activo ? 'Activo' : 'Inactivo'}</p>
-                        <p><strong>Tipo de notificación:</strong> {user?.tipoNotificacion}</p>
-                        <p><strong>Fecha de registro:</strong> {
-                            user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'No disponible'
-                        }</p>
-                    </div>
-                </div>
+                        {/* Profile Card - Solo se muestra cuando showProfile es true */}
+                        {showProfile && (
+                            <div className="grid-section full-width">
+                                <div className="section-header">
+                                    <h2 className="section-title">Mi Perfil</h2>
+                                    <p className="section-subtitle">Información de tu cuenta y configuración</p>
+                                </div>
+                                <ProfileCard 
+                                    user={user} 
+                                    onEditProfile={handleEditProfile}
+                                />
+                            </div>
+                        )}
 
-                <div className="quick-actions" style={{ marginTop: '30px' }}>
-                    <h3>Acciones Rápidas</h3>
-                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                        <button style={{
-                            padding: '10px 20px',
-                            backgroundColor: '#007bff',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer'
-                        }}>
-                            Ver Alertas
-                        </button>
-                        <button style={{
-                            padding: '10px 20px',
-                            backgroundColor: '#28a745',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer'
-                        }}>
-                            Configurar Notificaciones
-                        </button>
-                        <button style={{
-                            padding: '10px 20px',
-                            backgroundColor: '#ffc107',
-                            color: 'black',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer'
-                        }}>
-                            Ver Reportes
-                        </button>
+                        {/* Quick Actions */}
+                        <div className="grid-section full-width">
+                            <QuickActions />
+                        </div>
                     </div>
                 </div>
             </main>
+
+            {/* Profile Edit Modal */}
+            <ProfileEditModal 
+                user={user}
+                isOpen={showProfileModal}
+                onClose={() => setShowProfileModal(false)}
+                onProfileUpdate={handleProfileUpdate}
+            />
         </div>
     );
 };
