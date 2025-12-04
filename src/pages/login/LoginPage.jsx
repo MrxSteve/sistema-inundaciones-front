@@ -60,7 +60,6 @@ const LoginPage = () => {
 
     return (
         <>
-            <Navigation />
 
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#5B3DB6] to-[#3A0764] p-6 pt-24">
                 <div className="w-full max-w-5xl overflow-hidden rounded-2xl shadow-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
