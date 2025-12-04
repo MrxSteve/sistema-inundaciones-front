@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
+import SensorStatusCard from '../../components/SensorStatusCard';
 import './HomePage.css';
 
 const HomePage = () => {
@@ -43,18 +44,7 @@ const HomePage = () => {
                         </div>
                     </div>
                     <div className="hero-visual">
-                        <div className="floating-card">
-                            <div className="sensor-simulation">
-                                <div className="water-level">
-                                    <div className="water-wave"></div>
-                                </div>
-                                <div className="sensor-data">
-                                    <span className="data-label">Nivel del Agua</span>
-                                    <span className="data-value">Normal</span>
-                                    <span className="data-status safe">🟢 Seguro</span>
-                                </div>
-                            </div>
-                        </div>
+                        <SensorStatusCard />
                     </div>
                 </div>
             </section>

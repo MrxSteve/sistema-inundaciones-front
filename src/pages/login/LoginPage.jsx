@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import GoogleLoginButton from '../../components/GoogleLoginButton';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import { authService } from '../../services/authService';
+import Navigation from '../../components/Navigation';
+import GoogleLoginButton from '../../components/GoogleLoginButton';
 import './LoginPage.css';
 
 const LoginPage = () => {
@@ -58,69 +59,111 @@ const LoginPage = () => {
 
     return (
         <div className="login-page">
-            <div className="login-container">
-                <div className="login-header">
-                    <h1>Sistema de Monitoreo de Inundaciones</h1>
-                    <p>Iniciar Sesión</p>
-                </div>
-
-                {error && (
-                    <div className="error-message">
-                        {error}
+            <Navigation />
+            
+            <div className="login-hero">
+                <div className="login-hero-content">
+                    <div className="login-hero-text">
+                        <h1 className="login-title">
+                            Bienvenido de vuelta
+                        </h1>
+                        <p className="login-subtitle">
+                            Accede a tu cuenta y monitorea el sistema de alertas en tiempo real
+                        </p>
                     </div>
-                )}
+                    
+                    <div className="login-form-container">
+                        <div className="login-card">
+                            <div className="login-card-header">
+                                <h2>Iniciar Sesión</h2>
+                                <p>Ingresa tus credenciales o usa Google</p>
+                            </div>
 
-                <div className="google-login-section">
-                    <GoogleLoginButton
-                        onLoginSuccess={handleGoogleLoginSuccess}
-                        onLoginError={handleGoogleLoginError}
-                    />
+                            {error && (
+                                <div className="error-alert">
+                                    <span className="error-icon">⚠️</span>
+                                    <span>{error}</span>
+                                </div>
+                            )}
 
-                    <div className="divider">
-                        <span>O inicia sesión con tu cuenta</span>
+                            <div className="google-login-section">
+                                <GoogleLoginButton
+                                    onLoginSuccess={handleGoogleLoginSuccess}
+                                    onLoginError={handleGoogleLoginError}
+                                />
+
+                                <div className="login-divider">
+                                    <span>O continúa con email</span>
+                                </div>
+                            </div>
+
+                            <form onSubmit={handleSubmit} className="login-form">
+                                <div className="form-group">
+                                    <label htmlFor="email">Correo Electrónico</label>
+                                    <div className="input-container">
+                                        <span className="input-icon">📧</span>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleInputChange}
+                                            required
+                                            placeholder="tu@email.com"
+                                            disabled={loading}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="password">Contraseña</label>
+                                    <div className="input-container">
+                                        <span className="input-icon">🔒</span>
+                                        <input
+                                            type="password"
+                                            id="password"
+                                            name="password"
+                                            value={formData.password}
+                                            onChange={handleInputChange}
+                                            required
+                                            placeholder="••••••••"
+                                            disabled={loading}
+                                        />
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    className="login-submit-btn"
+                                    disabled={loading}
+                                >
+                                    {loading ? (
+                                        <>
+                                            <span className="loading-spinner"></span>
+                                            Iniciando sesión...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <span>🚀</span>
+                                            Iniciar Sesión
+                                        </>
+                                    )}
+                                </button>
+                            </form>
+
+                            <div className="login-footer">
+                                <p>
+                                    ¿No tienes cuenta? 
+                                    <Link to="/register" className="register-link">
+                                        Regístrate aquí
+                                    </Link>
+                                </p>
+                                <Link to="/" className="back-home-link">
+                                    ← Volver al inicio
+                                </Link>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <form onSubmit={handleSubmit} className="login-form">
-                    <div className="form-group">
-                        <label htmlFor="email">Email:</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="tu@email.com"
-                            disabled={loading}
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="password">Contraseña:</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="••••••••"
-                            disabled={loading}
-                        />
-                    </div>
-
-                    <button
-                        type="submit"
-                        className="login-button"
-                        disabled={loading}
-                    >
-                        {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-                    </button>
-                </form>
-
-                <div className="signup-link">
-                    <p>¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link></p>
                 </div>
             </div>
         </div>
