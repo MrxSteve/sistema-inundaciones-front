@@ -20,7 +20,7 @@ const LoginPage = () => {
     if (isAuthenticated) {
         return <Navigate to="/dashboard" replace />;
     }
-
+    
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -50,7 +50,7 @@ const LoginPage = () => {
         }
     };
 
-    const handleGoogleLoginSuccess = (authData) => {
+    const handleGoogleLoginSuccess = () => {
         navigate('/dashboard');
     };
 
@@ -59,68 +59,52 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="login-page">
+        <>
             <Navigation />
-            
-            <div className="login-hero">
-                <div className="login-hero-content">
-                    <div className="login-hero-text">
-                        <h1 className="login-title">
-                            Bienvenido de vuelta
-                        </h1>
-                        <p className="login-subtitle">
-                            Accede a tu cuenta y monitorea el sistema de alertas en tiempo real
-                        </p>
-                    </div>
-                    
-                    <div className="login-form-container">
-                        <div className="login-card">
-                            <div className="login-card-header">
-                                <h2>Iniciar Sesión</h2>
-                                <p>Ingresa tus credenciales o usa Google</p>
-                            </div>
 
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#5B3DB6] to-[#3A0764] p-6 pt-24">
+                <div className="w-full max-w-5xl overflow-hidden rounded-2xl shadow-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+                <div className="md:flex">
+                    {/* Left - form panel */}
+                    <div className="md:w-1/2 p-8 md:p-12 flex justify-center">
+                        <div className="w-full max-w-md bg-slate-900/80 border border-white/5 rounded-2xl p-6 md:p-10 shadow-xl">
                             {error && (
-                                <div className="error-alert">
-                                    <span className="error-icon">⚠️</span>
-                                    <span>{error}</span>
+                                <div className="mb-4 rounded-lg bg-red-900/30 border border-red-700/30 text-red-200 p-3 flex items-start gap-3">
+                                    <span className="text-xl">⚠️</span>
+                                    <div className="text-sm">{error}</div>
                                 </div>
                             )}
 
-                            <div className="google-login-section">
-                                <GoogleLoginButton
-                                    onLoginSuccess={handleGoogleLoginSuccess}
-                                    onLoginError={handleGoogleLoginError}
-                                />
-
-                                <div className="login-divider">
-                                    <span>O continúa con email</span>
+                            <div className="mb-6">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <span className="text-2xl">🌊</span>
+                                    <span className="text-white font-semibold">HydroAlertSV</span>
                                 </div>
+                                <h2 className="text-white text-2xl font-bold mb-1">Bienvenido de vuelta</h2>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="login-form">
-                                <div className="form-group">
-                                    <label htmlFor="email">Correo Electrónico</label>
-                                    <div className="input-row">
-                                        <div className="icon-box" aria-hidden>📧</div>
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            name="email"
-                                            value={formData.email}
-                                            onChange={handleInputChange}
-                                            required
-                                            placeholder="tu@email.com"
-                                            disabled={loading}
-                                        />
-                                    </div>
-                                </div>
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <div className="grid grid-cols-1 gap-4">
+                                        <div className="w-full">
+                                            <label htmlFor="email" className="block text-sm font-medium text-white/90 mb-2">Correo electrónico</label>
+                                            <div>
+                                                <input
+                                                    type="email"
+                                                    id="email"
+                                                    name="email"
+                                                    value={formData.email}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                    placeholder="name@company.com"
+                                                    disabled={loading}
+                                                    className="w-full bg-white/5 border border-white/10 rounded-md px-3 py-2 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+                                                />
+                                            </div>
+                                        </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="password">Contraseña</label>
-                                    <div className="input-row">
-                                        <div className="icon-box" aria-hidden>🔒</div>
-                                        <div style={{ position: 'relative', flex: 1 }}>
+                                    <div>
+                                        <label htmlFor="password" className="block text-sm font-medium text-white/90 mb-2">Contraseña</label>
+                                        <div className="relative w-full">
                                             <input
                                                 type={showPassword ? 'text' : 'password'}
                                                 id="password"
@@ -130,68 +114,70 @@ const LoginPage = () => {
                                                 required
                                                 placeholder="••••••••"
                                                 disabled={loading}
+                                                className="w-full pr-10 bg-white/5 border border-white/10 rounded-md px-3 py-2 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
                                             />
                                             <button
                                                 type="button"
                                                 onClick={() => setShowPassword(!showPassword)}
                                                 aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-                                                style={{
-                                                    position: 'absolute',
-                                                    right: 10,
-                                                    top: '50%',
-                                                    transform: 'translateY(-50%)',
-                                                    background: 'transparent',
-                                                    border: 'none',
-                                                    color: 'white',
-                                                    cursor: 'pointer',
-                                                    padding: 4,
-                                                }}
+                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/80"
                                             >
-                                                {showPassword ? (
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3l18 18"/><path d="M10.58 10.59A3 3 0 0013.41 13.41"/><path d="M14.12 14.12A6.5 6.5 0 0112 15.5C5 15.5 1 9 1 9a17.36 17.36 0 014.38-5.63"/></svg>
-                                                ) : (
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
-                                                )}
+                                                {showPassword ? '👁️‍🗨️' : '👁️'}
                                             </button>
                                         </div>
                                     </div>
                                 </div>
 
-                                <button
-                                    type="submit"
-                                    className="login-submit-btn"
-                                    disabled={loading}
-                                >
-                                    {loading ? (
-                                        <>
-                                            <span className="loading-spinner"></span>
-                                            Iniciando sesión...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <span>🚀</span>
-                                            Iniciar Sesión
-                                        </>
-                                    )}
-                                </button>
-                            </form>
+                                {/* <div className="flex items-center justify-between">
+                                    <label className="flex items-center gap-2 text-white/80 text-sm"><input type="checkbox" className="accent-indigo-500"/> Recuérdame</label>
+                                    <Link to="#" className="text-indigo-300 text-sm font-medium">¿Olvidaste tu contraseña?</Link>
+                                </div> */}
 
-                            <div className="login-footer">
-                                <p>
-                                    ¿No tienes cuenta? 
-                                    <Link to="/register" className="register-link">
-                                        Regístrate aquí
-                                    </Link>
-                                </p>
-                                <Link to="/" className="back-home-link">
-                                    ← Volver al inicio
-                                </Link>
-                            </div>
+                                <div className="mt-6">
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-md shadow-md flex items-center justify-center gap-3"
+                                        disabled={loading}
+                                    >
+                                        {loading ? (
+                                            <>
+                                                <span className="loading-spinner"></span>
+                                                Iniciando sesión...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>🔐</span>
+                                                Iniciar sesión
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
+
+                                <div className="flex flex-col items-center gap-3">
+                                    <div className="w-full max-w-xs">
+                                        <GoogleLoginButton
+                                            onLoginSuccess={handleGoogleLoginSuccess}
+                                            onLoginError={handleGoogleLoginError}
+                                        />
+                                    </div>
+                                </div>
+
+                                <p className="text-center text-white/70 text-sm mt-2">¿No tienes cuenta? <Link to="/register" className="text-indigo-300 font-medium">Regístrate.</Link></p>
+                            </form>
                         </div>
+                    </div>
+
+                    {/* Right - logo panel (replaces image) */}
+                    <div className="md:w-1/2 hidden md:flex items-center justify-center bg-cover bg-center">
+                        <div className="text-center">
+                            <span className="logo-icon text-[56px] block">🌊</span>
+                            <span className="logo-text block text-2xl font-bold text-white mt-4">HydroAlertSV</span>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
